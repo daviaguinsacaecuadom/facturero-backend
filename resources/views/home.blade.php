@@ -1,6 +1,7 @@
-{{-- @extends('layouts.app') --}}
+@extends('layouts.app')
 
 @extends('adminlte::page')
+
 
 @section('content')
     <div class="container">
@@ -18,16 +19,10 @@
 
                         {{ __('You are logged in!') }}
 
-                        @if (@Auth::user()->hasRole('client'))
-                            <h2>Rol de cliente</h2>
-                        @endif
-
-                        @if (@Auth::user()->hasRole('admin'))
-                            <h2>Rol adminisrador {{auth()->user()->id}}</h2>
-                        @endif
-
-                        @if (@Auth::user()->hasRole('edit'))
-                            <h2>Rol de editar {{auth()->user()->id}}</h2>
+                        @if (@Auth::user()->hasRole(['admin']))
+                            <div class="alert alert-primary" role="alert">
+                                Rol admin
+                            </div>
                         @endif
 
                     </div>
