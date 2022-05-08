@@ -6,9 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\isNull;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\UserRequest;
+use App\Models\Billing;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -19,20 +22,26 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+
+        // $id = Auth::user();
         $roles = Role::all();
+
+        // $data = DB::table('model_has_roles')
+        //     ->join('users', 'model_has_roles.model_id', '=', 'users.id')
+        //     ->select('model_has_roles.role_id')
+        //     ->where('users.id', $id->id)
+        //     ->first();
+
+        // $role = DB::table('roles')->select('*')->where('id', $data->role_id)->first();
+
+        //dd($data);
 
         if ($request->ajax()) {
             $data = User::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    // $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Comportamiento</a>';
-                    // return $btn;
-                    // <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delate" class="delete btn btn-danger btn-sm">Delete</a>';
-
-
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-success btn-sm">Show</a>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -57,9 +66,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //$user = User::create($request->all());
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -103,7 +113,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
 
         $update = User::find($id);
@@ -115,7 +125,6 @@ class UserController extends Controller
         $update->update($request->all());
 
         return redirect()->action([UserController::class, 'index']);
-
     }
 
     /**

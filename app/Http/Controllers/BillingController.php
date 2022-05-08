@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillingRequest;
 use App\Models\Billing;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -40,7 +41,7 @@ class BillingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BillingRequest $request)
     {
 
         Billing::create($request->all());
@@ -87,8 +88,6 @@ class BillingController extends Controller
         $update = Billing::find($id);
         $update->update($request->all());
 
-        $users = User::all();
-
         return redirect()->action([BillingController::class, 'index']);
 
 
@@ -117,6 +116,7 @@ class BillingController extends Controller
             $data = DB::table('billings')
                 ->join('users', 'billings.user_id', '=', 'users.id')
                 ->select('users.name', 'billings.*');
+            //$data = Billing::with('user')->get();
             return DataTables::of($data)
                 ->filter(function ($query) use ($request) {
                     if ($request->has('isPay') && !empty($request->isPay)) {

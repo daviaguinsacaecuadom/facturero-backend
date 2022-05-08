@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             UserSeeder::class,
             HasRoleSeeder::class,
-            BillingSeeder::class
+            BillingSeeder::class,
+            PermissionSeeder::class
         ]);
 
         Billing::factory(10)->create();

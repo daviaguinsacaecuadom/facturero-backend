@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
 @extends('adminlte::page')
-
 
 @section('content')
     <div class="container">
@@ -24,6 +21,13 @@
                                 Rol admin
                             </div>
                         @endif
+
+
+
+                        {{-- @if (@Auth::user()->hasPermissionTo('validar_cuenta'))
+                            <button class="btn">Validar venta</button>
+                        @endif --}}
+
 
                     </div>
                 </div>

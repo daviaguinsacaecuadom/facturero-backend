@@ -1,6 +1,17 @@
 @extends('adminlte::page')
 
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('user.update', $user->id) }}">
         @csrf
         @method('PUT')
@@ -34,13 +45,13 @@
         <div class="form-group">
             <select multiple class="form-control" id="exampleFormControlSelect2" name="role">
                 @foreach ($roles as $role)
-                    <option>{{ $role->name }}</option>
+                    <option selected>{{ $role->name }}</option>
                 @endforeach
             </select>
         </div>
 
         <br>
-        @if (@Auth::user()->hasAnyRole(['admin','edit']))
+        @if (@Auth::user()->hasAnyRole(['admin', 'edit']))
             <button type="submit" class="btn btn-success">Guardar</button>
         @endif
         <button type="button" class="btn btn-secondary"><a href="{{ route('user.index') }}">Cancelar</a></button>

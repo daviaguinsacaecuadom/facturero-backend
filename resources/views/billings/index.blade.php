@@ -21,7 +21,7 @@
 
 
                 <div class="ml-auto d-inline-flex">
-                    <select id="isPay" class="form-control isPay">
+                    <select id="isPay" class="form-control isPay" name="status">
                         <option value="">Todo</option>
                         <option value="Pagado">Pagado</option>
                         <option value="No Pagado">No Pagado</option>
