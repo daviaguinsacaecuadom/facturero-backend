@@ -258,7 +258,7 @@ return [
             'text' => 'Usuarios',
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-user',
-            'can' => 'edit'
+            //'can' => 'edit'
         ],
         [
             'text' => 'Facturas',
