@@ -25,7 +25,7 @@ class BillingRequest extends FormRequest
     {
         return [
             'user_id' => 'required',
-            'type' => 'required|unique:users',
+            'type' => 'required',
             'num_invoice' => 'required|min:0',
             'status' => 'required',
             'mount'=>'required|numeric|min:0'
