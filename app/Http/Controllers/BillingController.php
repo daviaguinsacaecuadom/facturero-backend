@@ -89,7 +89,12 @@ class BillingController extends Controller
 
         $users = User::all();
 
-        return view('billings.index', compact('users'));
+        return redirect()->action([BillingController::class, 'index']);
+
+
+        //return back()->withInput();
+        //return view('billings.index', compact('users'));
+        //return redirect()->back();
     }
 
     /**

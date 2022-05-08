@@ -112,9 +112,9 @@ class UserController extends Controller
             $update->password = $update->password;
         }
 
-
         $update->update($request->all());
 
+        return redirect()->action([UserController::class, 'index']);
 
     }
 
