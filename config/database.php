@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Str;
 
+
 return [
+
+    $DATABASE_URL = parse_url('postgres://sfmhwbqffhadfd:4d766c3c8b734d6505e0bb23b11c515943eaef2de889446ffb65af13730b3519@ec2-52-200-215-149.compute-1.amazonaws.com:5432/ddsr3130loustg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -15,7 +18,11 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+
+
+    #'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +75,8 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
+            #'database' => env('DB_DATABASE', 'forge'),
+            'database' => ltrim($DATABASE_URL["path"], "/"),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
