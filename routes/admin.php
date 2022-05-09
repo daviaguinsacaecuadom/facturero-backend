@@ -16,6 +16,9 @@ Route::group(['middleware' => ['role:admin|edit|client']], function () {
 
 Route::group(['middleware' => ['role:edit|admin']], function () {
     Route::resource('/user', UserController::class);
+});
+
+Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('/role',RoleController::class);
 });
 

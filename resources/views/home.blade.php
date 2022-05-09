@@ -22,12 +22,17 @@
                             </div>
                         @endif
 
+                        @if (@Auth::user()->hasRole(['edit']))
+                            <div class="alert alert-primary" role="alert">
+                                Rol edit
+                            </div>
+                        @endif
 
-
-                        {{-- @if (@Auth::user()->hasPermissionTo('validar_cuenta'))
-                            <button class="btn">Validar venta</button>
-                        @endif --}}
-
+                        @if (@Auth::user()->hasRole(['client']))
+                            <div class="alert alert-primary" role="alert">
+                                Rol client
+                            </div>
+                        @endif
 
                     </div>
                 </div>

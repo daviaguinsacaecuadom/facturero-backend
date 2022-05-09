@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BillingRequest;
 use App\Models\Billing;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -41,7 +40,7 @@ class BillingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BillingRequest $request)
+    public function store(Request $request)
     {
 
         Billing::create($request->all());
@@ -57,7 +56,6 @@ class BillingController extends Controller
      */
     public function show($id)
     {
-
 
         $billing = Billing::find($id);
         $users = User::all();

@@ -31,24 +31,28 @@
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
-        {{-- <input id="prodId" name="password" type="hidden" value="{{$user->password}}"> --}}
+        <input id="prodId" name="password" type="hidden" value="{{ $user->password }}">
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-        </div>
+        </div> --}}
 
         <!--Rol-->
 
-        <h4><span class="badge badge-pill badge-primary">2</span>Asignar Rol</h4>
 
-        <div class="form-group">
-            <select multiple class="form-control" id="exampleFormControlSelect2" name="role">
-                @foreach ($roles as $role)
-                    <option selected>{{ $role->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        @if (@Auth::user()->hasRole(['admin']))
+            <h4><span class="badge badge-pill badge-primary">2</span>Asignar Rol</h4>
+
+            <div class="form-group">
+                <select multiple class="form-control" id="exampleFormControlSelect2" name="role">
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
+
 
         <br>
         @if (@Auth::user()->hasAnyRole(['admin', 'edit']))

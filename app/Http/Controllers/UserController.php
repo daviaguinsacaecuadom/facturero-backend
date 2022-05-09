@@ -113,14 +113,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         $update = User::find($id);
 
-        if ($request->filled('password')) {
-            $update->password = $update->password;
-        }
+        $update->roles()->sync([$request->input('role')]);
 
         $update->update($request->all());
 
