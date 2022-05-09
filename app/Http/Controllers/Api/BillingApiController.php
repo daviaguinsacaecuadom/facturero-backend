@@ -51,7 +51,11 @@ class BillingApiController extends Controller
      */
     public function show(Billing $billing)
     {
-        //
+        try {
+            return response()->json($billing);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage(), 401);
+        }
     }
 
     /**
