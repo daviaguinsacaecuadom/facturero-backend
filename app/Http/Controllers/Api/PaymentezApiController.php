@@ -8,32 +8,15 @@ use DateTime;
 
 class PaymentezApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -50,7 +33,7 @@ class PaymentezApiController extends Controller
                 "cvc" => $request->cvc,
             ]
         ];
-        //$payToken = $this->paymentezToken()['token_client']['authtoken'];
+        $token = $this->paymentezToken()['authtoken'];
         //Abrimos conexión cURL y la almacenamos en la variable $ch.
         $ch = curl_init();
         //Configuramos mediante CURLOPT_URL la URL de nuestra API
@@ -63,7 +46,6 @@ class PaymentezApiController extends Controller
         // 0 o 1, indicamos que no queremos al Header en nuestra respuesta
         curl_setopt($ch, CURLOPT_HEADER, 0);
         //Enviamos nuestro header con el token
-        $token = $this->paymentezToken()['authtoken'];
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Auth-Token: ' . $token
@@ -75,12 +57,6 @@ class PaymentezApiController extends Controller
         $cardPay = json_decode($result);
 
         return $cardPay;
-        // $cardPay->card->brand = CardBrand::find($cardPay->card->type);
-        // if(isset($cardPay->error)){
-        //     return $this->sendError($cardPay->error);
-        // }
-
-        //return $this->sendResponse($cardPay, __('lang.saved_successfully', ['operator' => __('lang.user')]));
     }
 
     /**
@@ -128,7 +104,8 @@ class PaymentezApiController extends Controller
         //
     }
 
-    public function paymentezToken(){
+    public function paymentezToken()
+    {
         // $settings = setting()->all();
         // $settings = array_intersect_key($settings,
         //     [
@@ -145,32 +122,29 @@ class PaymentezApiController extends Controller
         //     'token_server' => $tokenServer
         // ];
 
-        $tokenClient = $this->generateToken('TPP3-EC-CLIENT','ZfapAKOk4QFXheRNvndVib9XU3szzg');
+        $tokenClient = $this->generateToken('TPP3-EC-CLIENT', 'ZfapAKOk4QFXheRNvndVib9XU3szzg');
 
         return $tokenClient;
     }
 
-    private function generateToken($key, $secret){
+    private function generateToken($key, $secret)
+    {
+        // $date = new DateTime();
+        // $unix_timestamp = $date->getTimestamp();
 
-        $date = new DateTime();
-        $unix_timestamp = $date->getTimestamp();
-
-        $pay = [
-            'date'=> $date,
-            'timestamp' => $unix_timestamp
-        ];
-
-        return $pay;
-
+        // $pay = [
+        //     'date' => $date,
+        //     'timestamp' => $unix_timestamp,
+        // ];
+        // return $pay;
         $paymentez_server_application_code = $key;
         $paymentez_server_app_key = $secret;
         $date = new DateTime();
         $unix_timestamp = $date->getTimestamp();
-        $uniq_token_string = $paymentez_server_app_key.$unix_timestamp;
+        $uniq_token_string = $paymentez_server_app_key . $unix_timestamp;
         $uniq_token_hash = hash('sha256', $uniq_token_string);
-        $auth_token = base64_encode($paymentez_server_application_code.";".$unix_timestamp.";".$uniq_token_hash);
+        $auth_token = base64_encode($paymentez_server_application_code . ";" . $unix_timestamp . ";" . $uniq_token_hash);
         $pay = [
-            'date'=> $date,
             'timestamp' => $unix_timestamp,
             'uniqtokenst' => $uniq_token_string,
             'uniqtohas' => $uniq_token_hash,

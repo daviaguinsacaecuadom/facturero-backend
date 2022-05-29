@@ -70,7 +70,10 @@ return [
     'timezone' => 'America/Guayaquil',
 
     /*
-    America/Guayaquil
+        America/Guayaquil
+        America/New_York
+        America/Sao_Paulo
+
     |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
