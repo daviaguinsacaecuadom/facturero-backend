@@ -267,11 +267,17 @@ return [
             'can' => 'client'
         ],
         [
-            'text'    => 'Rol',
+            'text'    => 'Excel',
             'icon'    => 'fas fa-fw fa-share',
             'can' => 'admin',
-            'url'  => 'admin/role',
+            'url'  => 'admin/excel',
         ],
+        // [
+        //     'text'    => 'Rol',
+        //     'icon'    => 'fas fa-fw fa-share',
+        //     'can' => 'admin',
+        //     'url'  => 'admin/role',
+        // ],
         // [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',
