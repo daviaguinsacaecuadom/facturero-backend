@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DateTime;
+use Illuminate\Support\Carbon;
 
 class PaymentezApiController extends Controller
 {
@@ -48,7 +49,7 @@ class PaymentezApiController extends Controller
         //Enviamos nuestro header con el token
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
-            'Auth-Token: ' . $token
+            'Auth-Token: VFBQMy1FQy1DTElFTlQ7MTY1Mzg2NTg1ODs4NjRhMzY1ODZiZmUxZTkxYmYxNDkyOTQ2OTFjMDU0NDQzN2I1YzNkNmFiYmVkM2RiZTM5ZjE1MTc4YTU5NTkz'
         ));
 
         $result = curl_exec($ch);
@@ -129,14 +130,14 @@ class PaymentezApiController extends Controller
 
     private function generateToken($key, $secret)
     {
-        // $date = new DateTime();
-        // $unix_timestamp = $date->getTimestamp();
+        $date = new DateTime();
+        $unix_timestamp = $date->getTimestamp();
+        $pay = [
+            'date' => $date,
+            'timestamp' => $unix_timestamp,
+        ];
+        return $pay;
 
-        // $pay = [
-        //     'date' => $date,
-        //     'timestamp' => $unix_timestamp,
-        // ];
-        // return $pay;
         $paymentez_server_application_code = $key;
         $paymentez_server_app_key = $secret;
         $date = new DateTime();
