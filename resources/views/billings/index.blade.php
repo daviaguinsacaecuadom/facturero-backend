@@ -19,14 +19,23 @@
                     </li>
                 @endif
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('pdf.index')}}"
+                        aria-controls="profile" aria-selected="false"><i class="fa fa-book fa-fw mr-2"></i>Generar PDF</a>
+                </li>
 
                 <div class="ml-auto d-inline-flex">
+                    <label for="">Filtrar</label>
+
                     <select id="isPay" class="form-control isPay" name="status">
                         <option value="">Todo</option>
                         <option value="Pagado">Pagado</option>
                         <option value="No Pagado">No Pagado</option>
                     </select>
                 </div>
+
+
+
 
             </ul>
         </div>
@@ -39,6 +48,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Factura a</th>
+                                <th scope="col">Contacto</th>
                                 <th scope="col">Num de factura</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Tipo</th>
@@ -53,7 +63,6 @@
                 @if (@Auth::user()->hasRole('admin'))
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <br>
-
                         @include('billings.create', compact('users'))
 
                     </div>
@@ -89,6 +98,9 @@
                 columns: [{
                         data: 'name',
                         name: 'name'
+                    },{
+                        data: 'contact',
+                        name: 'contact'
                     },
                     {
                         data: 'num_invoice',

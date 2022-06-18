@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('/billings',BillingApiController::class);
 Route::resource('/paymentez', PaymentezApiController::class);
 Route::get('/tokenuser', [PaymentezApiController::class,'paymentezToken']);
+Route::post('/tokenuserpost', [PaymentezApiController::class,'paymentezTokenpost']);
+

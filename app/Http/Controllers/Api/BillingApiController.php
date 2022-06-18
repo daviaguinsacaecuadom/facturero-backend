@@ -35,7 +35,7 @@ class BillingApiController extends Controller
         Billing::create($request->all());
         try {
             return response()->json([
-                'message' => 'Successfully'
+                'message' => 'successfully'
             ]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), 401);

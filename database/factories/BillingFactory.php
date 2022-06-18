@@ -18,7 +18,7 @@ class BillingFactory extends Factory
             'type'=> $this->faker->randomElement(['Factura', 'Rompe']),
             'status'=> $this->faker->randomElement(['Pagado','No Pagado']),
             'mount'=> $this->faker->randomDigit,
-            'user_id'=> 1
+            'user_id'=> $this->faker->randomElement([1,2,3,4,5])
         ];
     }
 }

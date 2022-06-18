@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Support\Carbon;
+use DateTimeZone;
 
 class PaymentezApiController extends Controller
 {
@@ -34,7 +35,7 @@ class PaymentezApiController extends Controller
                 "cvc" => $request->cvc,
             ]
         ];
-        $token = $this->paymentezToken()['authtoken'];
+        $token = $this->paymentezToken($request->date)['authtoken'];
         //Abrimos conexión cURL y la almacenamos en la variable $ch.
         $ch = curl_init();
         //Configuramos mediante CURLOPT_URL la URL de nuestra API
@@ -49,7 +50,7 @@ class PaymentezApiController extends Controller
         //Enviamos nuestro header con el token
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
-            'Auth-Token: VFBQMy1FQy1DTElFTlQ7MTY1Mzg2NTg1ODs4NjRhMzY1ODZiZmUxZTkxYmYxNDkyOTQ2OTFjMDU0NDQzN2I1YzNkNmFiYmVkM2RiZTM5ZjE1MTc4YTU5NTkz'
+            'Auth-Token: '.$token
         ));
 
         $result = curl_exec($ch);
@@ -105,7 +106,7 @@ class PaymentezApiController extends Controller
         //
     }
 
-    public function paymentezToken()
+    public function paymentezToken($dateF)
     {
         // $settings = setting()->all();
         // $settings = array_intersect_key($settings,
@@ -123,25 +124,34 @@ class PaymentezApiController extends Controller
         //     'token_server' => $tokenServer
         // ];
 
-        $tokenClient = $this->generateToken('TPP3-EC-CLIENT', 'ZfapAKOk4QFXheRNvndVib9XU3szzg');
+        $tokenClient = $this->generateToken('TPP3-EC-CLIENT', 'ZfapAKOk4QFXheRNvndVib9XU3szzg', $dateF);
 
         return $tokenClient;
     }
 
-    private function generateToken($key, $secret)
+    private function generateToken($key, $secret, $dateF)
     {
-        $date = new DateTime();
-        $unix_timestamp = $date->getTimestamp();
-        $pay = [
-            'date' => $date,
-            'timestamp' => $unix_timestamp,
-        ];
-        return $pay;
+        //$carbon = new Carbon(new DateTime(), new DateTimeZone('America/Guayaquil'));
+        // $carbon = Carbon::now(new DateTimeZone('Europe/London'));
+
+        // $date = new DateTime();
+        // $unix_timestamp_long = $date->getTimestamp();
+        // $unix_timestamp = Carbon::now()->timestamp;
+        // $unix_timestamp_string = Carbon::now()->toDateTimeString();
+        // $pay = [
+        //     'date' => $date,
+        //     'long_date'=>$unix_timestamp_long,
+        //     'carbon'=> $carbon->timestamp
+        //     // 'timestamp' => $unix_timestamp,
+        //     // 'time_string' => $unix_timestamp_string
+        // ];
+        // return $pay;
 
         $paymentez_server_application_code = $key;
         $paymentez_server_app_key = $secret;
         $date = new DateTime();
-        $unix_timestamp = $date->getTimestamp();
+        //$unix_timestamp = $date->getTimestamp();
+        $unix_timestamp = $dateF;
         $uniq_token_string = $paymentez_server_app_key . $unix_timestamp;
         $uniq_token_hash = hash('sha256', $uniq_token_string);
         $auth_token = base64_encode($paymentez_server_application_code . ";" . $unix_timestamp . ";" . $uniq_token_hash);

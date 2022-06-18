@@ -113,7 +113,7 @@ class BillingController extends Controller
         if ($request->ajax()) {
             $data = DB::table('billings')
                 ->join('users', 'billings.user_id', '=', 'users.id')
-                ->select('users.name', 'billings.*');
+                ->select('users.*', 'billings.*');
             //$data = Billing::with('user')->get();
             return DataTables::of($data)
                 ->filter(function ($query) use ($request) {
@@ -124,8 +124,7 @@ class BillingController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm">Show</a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info  btn-sm">Show</a>';
 
                     return $btn;
                 })
@@ -140,7 +139,13 @@ class BillingController extends Controller
 
                     return $status;
                 })
-                ->rawColumns(['action', 'status'])
+                ->addColumn('contact', function ($row) {
+                    $contact = '<span class="badge badge-warning">'.$row->phone.'</span>';
+
+
+                    return $contact;
+                })
+                ->rawColumns(['action', 'status', 'contact'])
                 ->make(true);
         }
     }

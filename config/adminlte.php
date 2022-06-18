@@ -266,12 +266,12 @@ return [
             'icon' => 'fa fa-file',
             'can' => 'client'
         ],
-        [
-            'text'    => 'Excel',
-            'icon'    => 'fas fa-fw fa-share',
-            'can' => 'admin',
-            'url'  => 'admin/excel',
-        ],
+        // [
+        //     'text'    => 'Excel',
+        //     'icon'    => 'fas fa-fw fa-share',
+        //     'can' => 'admin',
+        //     'url'  => 'admin/excel',
+        // ],
         // [
         //     'text'    => 'Rol',
         //     'icon'    => 'fas fa-fw fa-share',

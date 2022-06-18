@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -33,17 +34,23 @@ class PdfController extends Controller
         // $pdf = PDF::loadView('pdf.index', compact('data'));
         // return $pdf->download('archivo.pdf');
 
-        $pdf = PDF::loadView('pdf.index');
-        $data = ['foo' => 'baz'];
+        // $pdf = PDF::loadView('pdf.index');
+        // $data = ['foo' => 'baz'];
 
+        // Mail::send('pdf.index', $data, function ($mail) use ($pdf) {
+        //     $mail->from('davinsaca@yahoo.com', 'John Doe');
+        //     $mail->to('davinsaca@yahoo.com');
+        //     $mail->attachData($pdf->output(), 'test.pdf');
+        // });
 
+        $data = DB::table('billings')
+            ->join('users', 'billings.user_id', '=', 'users.id')
+            ->select('users.*', 'billings.*')->get();
 
-        Mail::send('pdf.index', $data, function ($mail) use ($pdf) {
-            $mail->from('davinsaca@yahoo.com', 'John Doe');
-            $mail->to('davinsaca@yahoo.com');
-            $mail->attachData($pdf->output(), 'test.pdf');
-        });
+        $pdf = PDF::loadView('pdf.index', compact('data'));
+        return $pdf->download('archivo.pdf');
 
+        //return view('pdf.index', compact('data'));
     }
 
     /**
