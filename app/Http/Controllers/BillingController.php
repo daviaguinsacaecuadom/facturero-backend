@@ -43,6 +43,8 @@ class BillingController extends Controller
     public function store(Request $request)
     {
 
+        return $request;
+
         Billing::create($request->all());
 
         return redirect()->back();

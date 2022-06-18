@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Billing;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -25,8 +26,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class
         ]);
         User::factory(10)->create();
-
         Billing::factory(10)->create();
+        Product::factory(10)->create();
 
     }
 }

@@ -10,6 +10,7 @@ class Billing extends Model
     use HasFactory;
 
     protected $fillable=[
+        'id',
         'num_invoice',
         'type',
         'status',
